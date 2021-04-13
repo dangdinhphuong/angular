@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { map, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { Router,ActivatedRoute  } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-moster-edit',
@@ -17,11 +17,11 @@ import { Router,ActivatedRoute  } from '@angular/router';
 })
 export class MosterEditComponent implements OnInit {
   data!: any[];
-  proId:Number = 0;
+  proId: Number = 0;
   cates: categories[] = [];
   suppli: suppliers[] = [];
   cateForm: FormGroup;
-  images:String="";
+  images: String = "";
   downloadURL!: Observable<string>;
   constructor(
     private categoryService: CategorysService,
@@ -30,36 +30,37 @@ export class MosterEditComponent implements OnInit {
     private storage: AngularFireStorage,
     private router: Router,
     private route: ActivatedRoute
-    ) {
+  ) {
 
     this.cateForm = this.createForm();
   }
 
 
-  async ngOnInit() {  
-    await this.route.params.subscribe(param=>{
-      this.proId= param.id;
+  async ngOnInit() {
+    await this.route.params.subscribe(param => {
+      this.proId = param.id;
       console.log(param.id);
-     });
-     await this.productsService.findById(this.proId).subscribe(item=>{
+    });
+    await this.productsService.findById(this.proId).subscribe(item => {
 
       this.cateForm.patchValue(
-        {id: item.id,
-          supplierId:item.supplierId,
-           name: item.name,
-           categoryId:item.categoryId,
-           description:item.description,
-           price:item.price,
-           sale:item.sale,
-          
-          });
-          this.images=item.image;
-       
-  });
-   this.getCateData();
-   this.getSuppliData();
- 
-   }
+        {
+          id: item.id,
+          supplierId: item.supplierId,
+          name: item.name,
+          categoryId: item.categoryId,
+          description: item.description,
+          price: item.price,
+          sale: item.sale,
+
+        });
+      this.images = item.image;
+
+    });
+    this.getCateData();
+    this.getSuppliData();
+
+  }
 
 
 
@@ -73,7 +74,7 @@ export class MosterEditComponent implements OnInit {
   getSuppliData() {
     this.suppliersService.all().subscribe(data => {
       this.suppli = data;
-    
+
     });
   }
 
@@ -88,26 +89,44 @@ export class MosterEditComponent implements OnInit {
     const filePath = `Products/${n}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(`Products/${n}`, file);
-    /// if size anh
-    task
-      .snapshotChanges().pipe(finalize(() => {
-        this.downloadURL = fileRef.getDownloadURL();
-        this.downloadURL.subscribe(url => {
-          this.cateForm.value.image = url;
-          console.log('test1', this.cateForm.value.image);
-          console.log(this.cateForm.value);
+    // console.log(event.target[3].files[0].size);
+    console.log(event.target[3].files[0]);
+    if (file) {// file = true khi có up ảnh mới
+      task
+        .snapshotChanges().pipe(finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL();
+          this.downloadURL.subscribe(url => {
+            this.cateForm.value.image = url;
+            console.log('test1', this.cateForm.value.image);
+            console.log(this.cateForm.value);
 
 
-          this.productsService.put(this.cateForm.value).subscribe(item => {
-            if (item != undefined) {
-              this.router.navigate(['/admin/moster/mosterList']);
-            }
+            this.productsService.put(this.cateForm.value).subscribe(item => {
+              if (item != undefined) {
+                this.router.navigate(['/admin/moster/mosterList']);
+              }
 
-          })
+            })
+          });
+        })
+        ).subscribe(url => {
         });
+    }
+    else {
+      this.cateForm.value.image = this.images;
+      console.log('test1', this.cateForm.value.image);
+      console.log(this.cateForm.value);
+
+
+      this.productsService.put(this.cateForm.value).subscribe(item => {
+        if (item != undefined) {
+          this.router.navigate(['/admin/moster/mosterList']);
+        }
+
       })
-      ).subscribe(url => {
-      });
+    }
+
+
   }
   createForm() {
     return new FormGroup(
@@ -115,7 +134,7 @@ export class MosterEditComponent implements OnInit {
         id: new FormControl(0, [
           Validators.required,
 
-        ]),categoryId: new FormControl(0, [
+        ]), categoryId: new FormControl(0, [
           Validators.required,
           Validators.min(1),
 
