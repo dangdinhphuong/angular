@@ -1,0 +1,58 @@
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <a href="javascript:;"class="btn btn-primary" routerLink="/admin/moster/mosterAdd">Add moster</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                       
+                        <th>Name</th>
+                        <th>Images</th>
+                        <th>Price</th>
+                        <th>Detail</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                       
+                        <th>Name</th>
+                        <th>Images</th>
+                        <th>Price</th>
+                        <th>Detail</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr *ngFor="let cate of cates; index as i" style="text-align: center;">
+                        <td>{{ i + 1 }}</td>
+                        <!-- <td >{{cate['category'][0]['id']}}</td> -->
+                        <td>{{ cate.name | titlecase }}</td>
+                        <td style="text-align: center;"><img src="{{cate.image }}" style="width:'100px'"alt="" ></td>
+                        <td>{{ cate.price }} VNĐ</td>
+                        <td> <button type="submit" class="btn btn-info" >Chi tiết</button></td>
+                        <td> <a href="javascrip" routerLink="/admin/moster/mosterEdit/{{cate.id }}"
+                            class="btn btn-success btn-circle"
+                        
+                          >
+                            <i class="fas fa-pencil-alt"></i>
+                          </a >
+                          <button
+                            class="btn btn-danger btn-circle"
+                            
+                          >
+                            <i class="fas fa-trash"></i>
+                          </button></td>
+                    </tr>
+               
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

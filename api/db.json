@@ -1,0 +1,102 @@
+{
+  "categories": [
+    {
+      "name": "Rau củ",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "name": "Hải sản"
+    },
+    {
+      "name": "Hoa quả trong nước",
+      "id": 3
+    },
+    {
+      "name": "Hoa quả sấy",
+      "id": 4
+    },
+    {
+      "name": "Thịt các loại",
+      "id": 5
+    }
+  ],
+  "products": [
+    {
+      "categoryId": 1,
+      "supplierId": 3,
+      "description": "ngon bổ rẻ",
+      "image": "https://firebasestorage.googleapis.com/v0/b/angular-4ead9.appspot.com/o/Products%2F1618324387793?alt=media&token=c24a2034-16c6-4ab7-9c2b-321bdb15b364",
+      "name": "gạo tám",
+      "price": 100000,
+      "sale": 20,
+      "id": 1
+    },
+    {
+      "categoryId": 2,
+      "supplierId": 3,
+      "description": "ngon bổ rẻ",
+      "image": "https://firebasestorage.googleapis.com/v0/b/angular-4ead9.appspot.com/o/Products%2F1618327776280?alt=media&token=1dcd6652-b0c9-4b79-9eb0-a5f52c1cb939",
+      "name": "cá ngừ",
+      "price": 250000,
+      "sale": 2,
+      "id": 2
+    },
+    {
+      "categoryId": 2,
+      "supplierId": 5,
+      "description": "ewewfdwfwf",
+      "image": "https://firebasestorage.googleapis.com/v0/b/angular-4ead9.appspot.com/o/Products%2F1618330187924?alt=media&token=74cf6a41-cda3-4ae1-8421-7dad7f1d5a7c",
+      "name": "cá cơm",
+      "price": 100000000,
+      "sale": 2,
+      "id": 3
+    },
+    {
+      "id": 4,
+      "categoryId": 1,
+      "supplierId": 3,
+      "description": "htrhtyh",
+      "image": "https://firebasestorage.googleapis.com/v0/b/angular-4ead9.appspot.com/o/Products%2F1618330876681?alt=media&token=89594e04-c114-4d94-88f6-09f6579f7408",
+      "name": "kvodjvojw",
+      "price": 10000,
+      "sale": 0
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "thanh hà",
+      "id": 3
+    },
+    {
+      "name": "Tấn tài",
+      "id": 4
+    },
+    {
+      "name": "Tam nguyên",
+      "id": 5
+    },
+    {
+      "name": "Thanh Phát",
+      "id": 6
+    },
+    {
+      "name": "Tâm phúc",
+      "id": 7
+    },
+    {
+      "id": 8,
+      "name": "hoa Thanh"
+    }
+  ],
+  "cons": [
+    {
+      "id": 1,
+      "name": "Đỗ Đăng Khoa2222"
+    },
+    {
+      "id": 2,
+      "name": "Lê Đỗ Quỳnh Hương"
+    }
+  ]
+}
