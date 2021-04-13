@@ -65,17 +65,17 @@ export class MosterAddComponent implements OnInit {
         this.downloadURL = fileRef.getDownloadURL();
         this.downloadURL.subscribe(url => {
           this.cateForm.value.image = url;
-          console.log('test1', this.cateForm.value.image);
+          console.log('test1', this.cateForm.value.image);   
+          this.cateForm.value.supplierId=  parseInt(this.cateForm.value.supplierId);
+          this.cateForm.value.categoryId=  parseInt(this.cateForm.value.categoryId);
           console.log(this.cateForm.value);
-
-
           this.productsService.store(this.cateForm.value).subscribe(item => {// neww sản phẩm
             if (item != undefined) {
 
               this.router.navigate(['/admin/moster/mosterList']);
             }
 
-          })
+         })
         });
       })
       ).subscribe(url => {
@@ -89,6 +89,7 @@ export class MosterAddComponent implements OnInit {
           Validators.required,
 
         ]),
+      
         categoryId: new FormControl(0, [
           Validators.required,
           Validators.min(1),

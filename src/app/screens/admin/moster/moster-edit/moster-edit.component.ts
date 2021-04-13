@@ -8,7 +8,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { map, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute  } from '@angular/router';
+
 @Component({
   selector: 'app-moster-edit',
   templateUrl: './moster-edit.component.html',
@@ -16,24 +17,51 @@ import { Router } from '@angular/router';
 })
 export class MosterEditComponent implements OnInit {
   data!: any[];
+  proId:Number = 0;
   cates: categories[] = [];
   suppli: suppliers[] = [];
   cateForm: FormGroup;
+  images:String="";
   downloadURL!: Observable<string>;
   constructor(
     private categoryService: CategorysService,
     private suppliersService: SuppliersService,
     private productsService: ProductsService,
-    private storage: AngularFireStorage
-    , private router: Router) {
+    private storage: AngularFireStorage,
+    private router: Router,
+    private route: ActivatedRoute
+    ) {
 
     this.cateForm = this.createForm();
   }
 
-  ngOnInit(): void {
-    this.getCateData();
-    this.getSuppliData();
-  }
+
+  async ngOnInit() {  
+    await this.route.params.subscribe(param=>{
+      this.proId= param.id;
+      console.log(param.id);
+     });
+     await this.productsService.findById(this.proId).subscribe(item=>{
+
+      this.cateForm.patchValue(
+        {id: item.id,
+          supplierId:item.supplierId,
+           name: item.name,
+           categoryId:item.categoryId,
+           description:item.description,
+           price:item.price,
+           sale:item.sale,
+          
+          });
+          this.images=item.image;
+       
+  });
+   this.getCateData();
+   this.getSuppliData();
+ 
+   }
+
+
 
   //---start export data
   getCateData() {
@@ -45,7 +73,7 @@ export class MosterEditComponent implements OnInit {
   getSuppliData() {
     this.suppliersService.all().subscribe(data => {
       this.suppli = data;
-      console.log(this.suppli);
+    
     });
   }
 
@@ -60,6 +88,7 @@ export class MosterEditComponent implements OnInit {
     const filePath = `Products/${n}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(`Products/${n}`, file);
+    /// if size anh
     task
       .snapshotChanges().pipe(finalize(() => {
         this.downloadURL = fileRef.getDownloadURL();
@@ -69,9 +98,8 @@ export class MosterEditComponent implements OnInit {
           console.log(this.cateForm.value);
 
 
-          this.productsService.store(this.cateForm.value).subscribe(item => {
+          this.productsService.put(this.cateForm.value).subscribe(item => {
             if (item != undefined) {
-
               this.router.navigate(['/admin/moster/mosterList']);
             }
 
@@ -79,13 +107,15 @@ export class MosterEditComponent implements OnInit {
         });
       })
       ).subscribe(url => {
-
       });
   }
   createForm() {
     return new FormGroup(
       {
-        categoryId: new FormControl(0, [
+        id: new FormControl(0, [
+          Validators.required,
+
+        ]),categoryId: new FormControl(0, [
           Validators.required,
           Validators.min(1),
 

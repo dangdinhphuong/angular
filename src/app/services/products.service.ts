@@ -19,13 +19,14 @@ export class ProductsService {
   store(data: any): Observable<any>{
     return this.http.post<any>(this.API_URL, data);
   }
-  findById(id: any): Observable<Products>{
-    // let API_URL = `${this.API_URL}/${id}?_embed=books`;
-    return this.http.get<Products>(this.API_URL);
+  findById(id: Number): Observable<Products>{
+    let API_URL = `${this.API_URL}/${id}`;
+    // console.log(API_URL);
+    return this.http.get<Products>(API_URL);
   }
   put(obj: Products): Observable<any>{
-    // let API_URL = `${this.API_URL}/${obj.id}`;
-    return this.http.put<any>(this.API_URL, obj);
+    let API_URL = `${this.API_URL}/${obj.id}`;
+    return this.http.put<any>(API_URL, obj);
   }
   delete(id: any): Observable<any>{
     // let API_URL = `${this.API_URL}/${id}`;

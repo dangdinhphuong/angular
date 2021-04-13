@@ -11,15 +11,12 @@
             <div class="d-flex justify-content-start">
               <div class="form-group col-xl-6 col-lg-6">
                 <label for="">Loại sản phẩm</label>
-                <select
-                  name=""
-                  id=""
-                  formControlName="categoryId"
-                  class="form-control"
-                >
+                <select formControlName="categoryId"class="form-control">
+                
                   <option [value]="0">
                     {{ "Chọn loại sản phẩm" | titlecase }}
                   </option>
+
                   <option
                     *ngFor="let cate of cates; index as i"
                     [value]="cate.id"
@@ -27,6 +24,8 @@
                     {{ cate.name | titlecase }}
                   </option>
                 </select>
+
+
                 <div
                   class="alert alert-danger"
                   *ngIf="
@@ -95,6 +94,7 @@
               <label for="">Ảnh sản phẩm</label>
               <input type="file" formControlName="image" class="form-control" />
             </div>
+            <!-- {{f.image.value}} -->
             <div class="d-flex justify-content-start">
               <div class="form-group col-xl-6 col-lg-6">
                 <label for="">Giá sản phẩm (VNĐ)</label>
